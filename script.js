@@ -190,7 +190,7 @@ function mostrarCadastros() {
     html += '<small>' + limpar(c.endereco) + ' — ' + limpar(c.cidade) + '/' + limpar(c.uf) + '</small><br>';
     html += '<small>Contato: ' + limpar(c.contato) + '</small>';
     if (c.tipo == 'doador') {
-      html += '<br><strong>' + formatar(c.kg) + ' kg por semana</strong>';
+      html += '<br><strong>' + formatar(c.kg) + ' kg disponíveis</strong>';
     }
     html += '<div class="card-actions"><button class="btn small outline" data-remover="' + c.id + '">Remover</button></div>';
     html += '</div>';
@@ -223,7 +223,7 @@ document.getElementById('savedList').addEventListener('click', function (e) {
 document.getElementById('reqForm').addEventListener('submit', function (e) {
   e.preventDefault();
 
-  if (!camposPreenchidos(['reqName', 'reqPhone', 'reqUf', 'reqCity'])) {
+  if (!camposPreenchidos(['reqName', 'reqPhone', 'reqUf', 'reqCity', 'reqAddress'])) {
     mostrarMensagem('reqMsg', 'Preencha todos os campos obrigatórios.', false);
     return;
   }
@@ -237,6 +237,7 @@ document.getElementById('reqForm').addEventListener('submit', function (e) {
     telefone: document.getElementById('reqPhone').value.trim(),
     uf: uf,
     cidade: cidade,
+    endereco: document.getElementById('reqAddress').value.trim(),
     pessoas: Number(document.getElementById('reqPeople').value) || 1,
     alimento: document.getElementById('reqFood').value.trim(),
     data: new Date().toLocaleDateString('pt-BR'),
@@ -286,7 +287,8 @@ function mostrarSolicitacoes() {
     html += '<div class="' + classe + '">';
     html += '<small>' + limpar(s.data) + ' · ' + s.pessoas + ' pessoa(s)' + (s.doado ? ' · Já doado' : '') + '</small>';
     html += '<h3>' + limpar(s.nome) + '</h3>';
-    html += '<small>' + limpar(s.cidade) + '/' + limpar(s.uf) + (s.alimento ? ' · ' + limpar(s.alimento) : '') + '</small><br>';
+    // solicitações antigas podem não ter endereço salvo
+    html += '<small>' + (s.endereco ? limpar(s.endereco) + ' — ' : '') + limpar(s.cidade) + '/' + limpar(s.uf) + (s.alimento ? ' · ' + limpar(s.alimento) : '') + '</small><br>';
     html += '<small>Contato: ' + limpar(s.telefone) + '</small>';
     html += '<div class="card-actions">';
     html += '<button class="btn small yellow" data-doado="' + i + '">' + textoBotao + '</button>';
@@ -383,60 +385,6 @@ for (var i = 0; i < bolinhas.length; i++) {
 setInterval(function () {
   mostrarDepoimento((depoimentoAtual + 1) % depoimentos.length);
 }, 6000);
-
-// ---------- janela de parceiro ----------
-var janela = document.getElementById('partnerModal');
-
-function abrirJanela() {
-  janela.hidden = false;
-  document.getElementById('pCompany').focus();
-}
-
-function fecharJanela() {
-  janela.hidden = true;
-}
-
-var botoesParceiro = document.querySelectorAll('[data-open-partner]');
-for (var i = 0; i < botoesParceiro.length; i++) {
-  botoesParceiro[i].addEventListener('click', abrirJanela);
-}
-document.getElementById('partnerClose').addEventListener('click', fecharJanela);
-janela.addEventListener('click', function (e) {
-  if (e.target == janela) {
-    fecharJanela();
-  }
-});
-document.addEventListener('keydown', function (e) {
-  if (e.key == 'Escape') {
-    fecharJanela();
-  }
-});
-
-document.getElementById('partnerForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-  var email = document.getElementById('pEmail').value;
-
-  if (!camposPreenchidos(['pCompany', 'pPerson', 'pEmail']) || email.indexOf('@') == -1) {
-    mostrarMensagem('pMsg', 'Preencha todos os campos com um e-mail válido.', false);
-    return;
-  }
-
-  var parceiros = pegar('matafome_parceiros');
-  parceiros.push({
-    empresa: document.getElementById('pCompany').value.trim(),
-    responsavel: document.getElementById('pPerson').value.trim(),
-    email: email.trim(),
-    ajuda: document.getElementById('pHelp').value
-  });
-  salvar('matafome_parceiros', parceiros);
-
-  mostrarMensagem('pMsg', 'Obrigado! Entraremos em contato em breve.', true);
-  this.reset();
-  setTimeout(function () {
-    fecharJanela();
-    document.getElementById('pMsg').textContent = '';
-  }, 2000);
-});
 
 // ---------- quando a página abre ----------
 atualizarNumeros();

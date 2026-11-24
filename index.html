@@ -22,7 +22,6 @@
       <a href="#solicitar">Solicitar</a>
       <a href="#depoimentos">Depoimentos</a>
     </nav>
-    <button class="btn dark small" data-open-partner>Seja parceiro</button>
   </div>
 </header>
 
@@ -116,7 +115,7 @@
           <label class="full">Endereço (rua e número)
             <input id="regAddress" required maxlength="120" placeholder="Rua das Flores, 123">
           </label>
-          <label id="kgLabel">Alimentos disponíveis por semana (kg)
+          <label id="kgLabel">Alimentos disponíveis (kg)
             <input id="regKg" type="number" min="1" max="100000" value="20">
           </label>
           <label>Categoria
@@ -154,6 +153,9 @@
           <label>Cidade
             <select id="reqCity" required disabled><option value="">Selecione o estado</option></select>
           </label>
+          <label class="full">Endereço (rua e número)
+            <input id="reqAddress" required maxlength="120" placeholder="Rua das Flores, 123">
+          </label>
           <label>Pessoas na família / atendidas
             <input id="reqPeople" type="number" min="1" max="10000" value="4">
           </label>
@@ -185,16 +187,6 @@
     </div>
   </section>
 
-  <!-- PARCEIROS -->
-  <section class="cta pad">
-    <div class="container cta-inner">
-      <div>
-        <h2>Sua empresa pode fazer parte</h2>
-        <p>Reduza desperdício, ganhe visibilidade e ajude a alimentar quem precisa.</p>
-      </div>
-      <button class="btn dark" data-open-partner>Quero ser parceiro</button>
-    </div>
-  </section>
 </main>
 
 <footer>
@@ -207,28 +199,6 @@
     </p>
   </div>
 </footer>
-
-<!-- MODAL PARCEIRO -->
-<div class="modal" id="partnerModal" hidden>
-  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="pTitle">
-    <button class="close" id="partnerClose" aria-label="Fechar">×</button>
-    <h3 id="pTitle">Torne-se parceiro</h3>
-    <form id="partnerForm" class="form" novalidate>
-      <label>Empresa <input id="pCompany" required maxlength="80"></label>
-      <label>Responsável <input id="pPerson" required maxlength="80"></label>
-      <label>E-mail <input id="pEmail" type="email" required maxlength="80"></label>
-      <label>Como quer ajudar?
-        <select id="pHelp">
-          <option>Doar alimentos excedentes</option>
-          <option>Apoiar com transporte / logística</option>
-          <option>Patrocinar o projeto</option>
-        </select>
-      </label>
-      <button class="btn yellow" type="submit">Enviar interesse</button>
-      <p class="msg" id="pMsg" role="status"></p>
-    </form>
-  </div>
-</div>
 
 <script src="script.js"></script>
 </body>
