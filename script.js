@@ -190,7 +190,7 @@ function mostrarCadastros() {
     html += '<small>' + limpar(c.endereco) + ' — ' + limpar(c.cidade) + '/' + limpar(c.uf) + '</small><br>';
     html += '<small>Contato: ' + limpar(c.contato) + '</small>';
     if (c.tipo == 'doador') {
-      html += '<br><strong>' + formatar(c.kg) + ' kg por semana</strong>';
+      html += '<br><strong>' + formatar(c.kg) + ' kg disponíveis</strong>';
     }
     html += '<div class="card-actions"><button class="btn small outline" data-remover="' + c.id + '">Remover</button></div>';
     html += '</div>';
@@ -223,7 +223,7 @@ document.getElementById('savedList').addEventListener('click', function (e) {
 document.getElementById('reqForm').addEventListener('submit', function (e) {
   e.preventDefault();
 
-  if (!camposPreenchidos(['reqName', 'reqPhone', 'reqUf', 'reqCity'])) {
+  if (!camposPreenchidos(['reqName', 'reqPhone', 'reqUf', 'reqCity', 'reqAddress'])) {
     mostrarMensagem('reqMsg', 'Preencha todos os campos obrigatórios.', false);
     return;
   }
@@ -237,6 +237,7 @@ document.getElementById('reqForm').addEventListener('submit', function (e) {
     telefone: document.getElementById('reqPhone').value.trim(),
     uf: uf,
     cidade: cidade,
+    endereco: document.getElementById('reqAddress').value.trim(),
     pessoas: Number(document.getElementById('reqPeople').value) || 1,
     alimento: document.getElementById('reqFood').value.trim(),
     data: new Date().toLocaleDateString('pt-BR'),
@@ -286,7 +287,8 @@ function mostrarSolicitacoes() {
     html += '<div class="' + classe + '">';
     html += '<small>' + limpar(s.data) + ' · ' + s.pessoas + ' pessoa(s)' + (s.doado ? ' · Já doado' : '') + '</small>';
     html += '<h3>' + limpar(s.nome) + '</h3>';
-    html += '<small>' + limpar(s.cidade) + '/' + limpar(s.uf) + (s.alimento ? ' · ' + limpar(s.alimento) : '') + '</small><br>';
+    // solicitações antigas podem não ter endereço salvo
+    html += '<small>' + (s.endereco ? limpar(s.endereco) + ' — ' : '') + limpar(s.cidade) + '/' + limpar(s.uf) + (s.alimento ? ' · ' + limpar(s.alimento) : '') + '</small><br>';
     html += '<small>Contato: ' + limpar(s.telefone) + '</small>';
     html += '<div class="card-actions">';
     html += '<button class="btn small yellow" data-doado="' + i + '">' + textoBotao + '</button>';
