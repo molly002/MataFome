@@ -1,0 +1,15 @@
+ReAção — página inicial demonstrativa
+
+Arquivos:
+- index.html: estrutura e conteúdo da página.
+- styles.css: identidade visual, estilos e responsividade.
+- assets/reacao-voluntarios.jpg: foto ilustrativa local usada no destaque.
+
+Como visualizar:
+1. Mantenha a pasta assets junto do index.html e do styles.css.
+2. Abra index.html em um navegador. A página não precisa de servidor nem de JavaScript.
+
+Observações:
+- Os links navegam pelas seções da própria página. Cadastros e contatos não estão conectados a serviços reais.
+- A foto foi encontrada em resultado de busca associado ao San Diego Food Bank. Antes de publicar fora do contexto escolar, confirme os direitos de uso ou substitua-a por uma imagem autorizada.
+- A folha de estilos tenta carregar as fontes DM Sans e Manrope do Google Fonts; sem internet, há fontes alternativas instaladas no sistema.
