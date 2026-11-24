@@ -384,60 +384,6 @@ setInterval(function () {
   mostrarDepoimento((depoimentoAtual + 1) % depoimentos.length);
 }, 6000);
 
-// ---------- janela de parceiro ----------
-var janela = document.getElementById('partnerModal');
-
-function abrirJanela() {
-  janela.hidden = false;
-  document.getElementById('pCompany').focus();
-}
-
-function fecharJanela() {
-  janela.hidden = true;
-}
-
-var botoesParceiro = document.querySelectorAll('[data-open-partner]');
-for (var i = 0; i < botoesParceiro.length; i++) {
-  botoesParceiro[i].addEventListener('click', abrirJanela);
-}
-document.getElementById('partnerClose').addEventListener('click', fecharJanela);
-janela.addEventListener('click', function (e) {
-  if (e.target == janela) {
-    fecharJanela();
-  }
-});
-document.addEventListener('keydown', function (e) {
-  if (e.key == 'Escape') {
-    fecharJanela();
-  }
-});
-
-document.getElementById('partnerForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-  var email = document.getElementById('pEmail').value;
-
-  if (!camposPreenchidos(['pCompany', 'pPerson', 'pEmail']) || email.indexOf('@') == -1) {
-    mostrarMensagem('pMsg', 'Preencha todos os campos com um e-mail válido.', false);
-    return;
-  }
-
-  var parceiros = pegar('matafome_parceiros');
-  parceiros.push({
-    empresa: document.getElementById('pCompany').value.trim(),
-    responsavel: document.getElementById('pPerson').value.trim(),
-    email: email.trim(),
-    ajuda: document.getElementById('pHelp').value
-  });
-  salvar('matafome_parceiros', parceiros);
-
-  mostrarMensagem('pMsg', 'Obrigado! Entraremos em contato em breve.', true);
-  this.reset();
-  setTimeout(function () {
-    fecharJanela();
-    document.getElementById('pMsg').textContent = '';
-  }, 2000);
-});
-
 // ---------- quando a página abre ----------
 atualizarNumeros();
 mostrarCadastros();
