@@ -3,9 +3,6 @@
 // Os dados ficam salvos no localStorage do navegador.
 
 // ---------- dados de exemplo ----------
-var KG_BASE = 12480;
-var FAMILIAS_BASE = 340;
-
 var doadoresExemplo = [
   { tipo: 'doador', nome: 'Restaurante Sabor da Terra', categoria: 'Restaurante', uf: 'PR', cidade: 'Curitiba', endereco: 'Centro', contato: '(41) 3000-0001', kg: 45 },
   { tipo: 'doador', nome: 'Mercado Bom Preço', categoria: 'Supermercado', uf: 'PR', cidade: 'Curitiba', endereco: 'Água Verde', contato: '(41) 3000-0002', kg: 120 },
@@ -72,7 +69,8 @@ function atualizarNumeros() {
   var cadastros = pegar('matafome_cadastros');
   var solicitacoes = pegar('matafome_solicitacoes');
 
-  var kg = KG_BASE;
+  // soma os kg de todos os cadastros salvos
+  var kg = 0;
   for (var i = 0; i < cadastros.length; i++) {
     kg = kg + cadastros[i].kg;
   }
@@ -80,8 +78,8 @@ function atualizarNumeros() {
   document.getElementById('heroKg').textContent = formatar(kg);
   document.getElementById('statKg').textContent = formatar(kg);
   document.getElementById('statMeals').textContent = formatar(kg / 0.4); // 1 refeição = 400 g
-  document.getElementById('statPartners').textContent = doadoresExemplo.length + cadastros.length;
-  document.getElementById('statFamilies').textContent = FAMILIAS_BASE + solicitacoes.length;
+  document.getElementById('statPartners').textContent = cadastros.length;
+  document.getElementById('statFamilies').textContent = solicitacoes.length;
 }
 
 // ---------- estados e cidades (API do IBGE) ----------
